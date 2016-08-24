@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"time"
+	"os"
 	)
 
 
@@ -166,7 +167,7 @@ func main() {
 	}()
 
 	//catch /snap URl and show current snapshot
-	http.HandleFunc("/snap", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 							stuff:= make_html(d)
 							handler(w,r,stuff)
 							})
@@ -186,8 +187,8 @@ func main() {
 					//})
 
 	//serve
-	fmt.Println("Starting server....")
-	http.ListenAndServe(":5000", nil)
+	fmt.Println("Starting server on...", os.Getenv("PORT"))
+	http.ListenAndServe(":" + os.Getenv("PORT"), nil)
 	
 }
 
